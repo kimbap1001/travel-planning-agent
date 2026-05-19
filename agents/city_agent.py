@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_community.tools import DuckDuckGoSearchRun
-from langchain.agents import create_agent as create_react_agent
+from langgraph.prebuilt import create_react_agent
 from dotenv import load_dotenv
 import os
 
