@@ -132,16 +132,18 @@ OPENAI_API_KEY=your_openai_api_key
 py -m graph.travel_graph
 ```
 
----
+**6. Type your travel plan — and grab a coffee! ☕**
 
-## 💬 Example Inputs
-
-```python
-plan_travel("도쿄 10월말 5일 50만원으로 가고싶어")
-plan_travel("9월에 미국 가고싶은데 예산은 150만원, 10박이야")
-plan_travel("동남아 여행 가고싶어")
-plan_travel("파리 가고싶어")
+The agent will ask you to enter your travel plan in natural language:
+```bash
+✈️  여행 플래닝 AI 에이전트
+예시: 도쿄 10월말 5일 50만원으로 가고싶어
+예시: 9월에 미국 가고싶은데 예산은 150만원, 10박이야
+예시: 동남아 여행 가고싶어
+여행 계획을 입력하세요:
 ```
+The agent will then automatically search for flights, collect city information, find attractions, and build a full day-by-day itinerary. This takes 2–3 minutes, so sit back and relax!
+
 
 ---
 
