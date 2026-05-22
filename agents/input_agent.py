@@ -20,13 +20,17 @@ def analyze_input(user_input: str):
 
 TYPE: CITY, COUNTRY, REGION 중 하나
 DESTINATION: 목적지 이름
-BUDGET: 예산 (숫자만, 없으면 NONE)
+MONTH: 여행 월 (없으면 NONE)
+DAYS: 여행 일수 (없으면 NONE)
+BUDGET: 예산 숫자만 (없으면 NONE)
 
 예시:
-- "도쿄 50만원으로 가고싶어" → TYPE:CITY / DESTINATION:도쿄 / BUDGET:500000
-- "일본 여행 80만원" → TYPE:COUNTRY / DESTINATION:일본 / BUDGET:800000
-- "동남아 여행" → TYPE:REGION / DESTINATION:동남아 / BUDGET:NONE
-- "파리 가고싶어" → TYPE:CITY / DESTINATION:파리 / BUDGET:NONE
+- "도쿄 10월말 5일 50만원으로 가고싶어"
+  → TYPE:CITY / DESTINATION:도쿄 / MONTH:10월말 / DAYS:5 / BUDGET:500000
+- "일본 여행 80만원 3박4일"
+  → TYPE:COUNTRY / DESTINATION:일본 / MONTH:NONE / DAYS:4 / BUDGET:800000
+- "동남아 여행"
+  → TYPE:REGION / DESTINATION:동남아 / MONTH:NONE / DAYS:NONE / BUDGET:NONE
 
 반드시 위 형식으로만 답하세요."""),
         ("user", user_input)
@@ -40,7 +44,10 @@ if __name__ == "__main__":
     "도쿄 50만원으로 가고싶어",
     "일본 여행 80만원",
     "동남아 여행",
-    "파리 가고싶어"
+    "파리 가고싶어",
+    "도쿄 10월말 5일 50만원으로 가고싶어",   
+    "방콕 3박4일 내년 1월에 가고싶어",        
+
     ]
     for t in tests:
         result = analyze_input(t)
