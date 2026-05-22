@@ -244,9 +244,27 @@ def plan_travel(user_input: str):
     return result
 
 if __name__ == "__main__":
-    result = plan_travel("도쿄 10월말 5일 50만원으로 가고싶어")
+    print("✈️  여행 플래닝 AI 에이전트")
+    print("=" * 50)
+    print("예시: 도쿄 10월말 5일 50만원으로 가고싶어")
+    print("예시: 9월에 미국 가고싶은데 예산 150만원 10박이야")
+    print("예시: 동남아 여행 가고싶어")
+    print("=" * 50)
+    
+    user_input = input("\n여행 계획을 입력하세요: ")
+    result = plan_travel(user_input)
     
     if result["schedule"]:
+        print("\n" + "="*50)
+        print("🏙️ 도시 정보")
+        print("="*50)
+        print(result["city_info"])
+        
+        print("\n" + "="*50)
+        print("📍 추천 장소")
+        print("="*50)
+        print(result["places"])
+        
         print("\n" + "="*50)
         print("📅 최종 여행 일정")
         print("="*50)
