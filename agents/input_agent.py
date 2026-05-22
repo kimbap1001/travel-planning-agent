@@ -18,18 +18,17 @@ def analyze_input(user_input: str):
     prompt = ChatPromptTemplate.from_messages([
         ("system", """사용자의 여행 입력을 분석해서 아래 형식으로만 답하세요.
 
-입력이 특정 도시/공항이면: CITY:도시명
-입력이 나라이면: COUNTRY:나라명
-입력이 지역(동남아, 유럽, 미국 등)이면: REGION:지역명
+TYPE: CITY, COUNTRY, REGION 중 하나
+DESTINATION: 목적지 이름
+BUDGET: 예산 (숫자만, 없으면 NONE)
 
 예시:
-- "도쿄 가고 싶어" → CITY:도쿄
-- "일본 여행" → COUNTRY:일본
-- "동남아 여행" → REGION:동남아
-- "유럽 여행" → REGION:유럽
-- "파리" → CITY:파리
+- "도쿄 50만원으로 가고싶어" → TYPE:CITY / DESTINATION:도쿄 / BUDGET:500000
+- "일본 여행 80만원" → TYPE:COUNTRY / DESTINATION:일본 / BUDGET:800000
+- "동남아 여행" → TYPE:REGION / DESTINATION:동남아 / BUDGET:NONE
+- "파리 가고싶어" → TYPE:CITY / DESTINATION:파리 / BUDGET:NONE
 
-반드시 위 형식 중 하나로만 답하세요."""),
+반드시 위 형식으로만 답하세요."""),
         ("user", user_input)
     ])
     
@@ -37,7 +36,12 @@ def analyze_input(user_input: str):
     return chain.invoke({})
 
 if __name__ == "__main__":
-    tests = ["도쿄 가고 싶어", "일본 여행", "동남아 여행", "파리"]
+    tests = [
+    "도쿄 50만원으로 가고싶어",
+    "일본 여행 80만원",
+    "동남아 여행",
+    "파리 가고싶어"
+    ]
     for t in tests:
         result = analyze_input(t)
         print(f"입력: {t} → {result}")
