@@ -36,8 +36,8 @@ def find_cities(location: str):
     return result["messages"][-1].content
 
 if __name__ == "__main__":
-    print("\n=== 일본 인기 도시 ===")
+    print("\n=== 미국 인기 도시 ===")
     print(find_cities("미국"))
     
-    print("\n=== 동남아 인기 도시 ===")
+    print("\n=== 유럽 인기 도시 ===")
     print(find_cities("유럽"))
