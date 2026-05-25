@@ -98,7 +98,7 @@ def node_check_budget(state: TravelState):
         ("system", """항공권 가격 정보와 예산을 비교하세요.
 예산 내에서 가능하면 OK, 불가능하면 OVER라고만 답하세요."""),
         ("user", f"""예산: {state['budget']:,}원
-항공권 정보: {state['flight_info']}
+항공권 정보: {state['flight_info'][:200]}
 
 예산 내 가능한가요? OK 또는 OVER로만 답하세요.""")
     ])
@@ -141,12 +141,7 @@ def node_validate(state: TravelState):
     print(f"\n✅ 일정 검증 중...")
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """여행 일정을 검증하세요.
-기준:
-1. 하루 최대 4곳 이내인가?
-2. 지리적으로 가까운 장소들이 같은 날 배치되어 있는가?
-
-문제 있으면 RETRY, 없으면 OK로만 답하세요."""),
+        ("system", """일정 검증: 하루4곳이하+지리적근접여부. RETRY또는OK로만답하세요."""),
         ("user", f"일정:\n{state['schedule']}")
     ])
     
