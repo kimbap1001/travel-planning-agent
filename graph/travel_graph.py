@@ -167,6 +167,10 @@ def node_budget_exceeded(state: TravelState):
     print(f"항공권 정보: {state['flight_info']}")
     return {}
 
+def node_merge(state: TravelState):
+    # city_agent랑 places_agent 결과가 둘 다 모이면 통과
+    return {}
+
 # 분기 함수들
 def route_by_type(state: TravelState):
     if state["input_type"] == "CITY":
@@ -175,11 +179,9 @@ def route_by_type(state: TravelState):
         return "find_cities"
 
 def route_by_budget(state: TravelState):
-    if state["validation"] == "NO_BUDGET":
-        return "city_info"
-    elif state["validation"] == "OK":
-        return "city_info"
-    else:  # OVER
+    if state["validation"] in ("NO_BUDGET", "OK"):
+        return ["city_info", "places"]  # 동시 실행
+    else:
         return "budget_exceeded"
 
 def route_validate(state: TravelState):
@@ -198,6 +200,7 @@ graph.add_node("check_budget", node_check_budget)
 graph.add_node("budget_exceeded", node_budget_exceeded)
 graph.add_node("city_info", node_city_info)
 graph.add_node("places", node_places)
+graph.add_node("merge", node_merge)  # 추가
 graph.add_node("schedule", node_schedule)
 graph.add_node("validate", node_validate)
 
@@ -211,11 +214,16 @@ graph.add_edge("find_cities", "flight_search")
 graph.add_edge("flight_search", "check_budget")
 graph.add_conditional_edges("check_budget", route_by_budget, {
     "city_info": "city_info",
+    "places": "places",
     "budget_exceeded": "budget_exceeded"
 })
 graph.add_edge("budget_exceeded", END)
-graph.add_edge("city_info", "places")
-graph.add_edge("places", "schedule")
+
+# fan-in: 둘 다 끝나면 merge로 합류
+graph.add_edge("city_info", "merge")
+graph.add_edge("places", "merge")
+graph.add_edge("merge", "schedule")
+
 graph.add_edge("schedule", "validate")
 graph.add_conditional_edges("validate", route_validate, {
     "schedule": "schedule",
