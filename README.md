@@ -42,11 +42,12 @@ User Input (natural language)
   └─ Over budget   → Notify user
 
 Travel Planning Pipeline:
-  city_agent → places_agent → schedule_agent → validate
-                                                  ↓
-                                          [Loop if invalid]
-                                                  ↓
-                                           Final Itinerary
+  city_agent ──┐
+               ├──→ schedule_agent → validate
+  places_agent─┘                         ↓
+                                  [Loop if invalid]
+                                         ↓
+                                  Final Itinerary
 ```
 
 ---
@@ -69,6 +70,8 @@ Travel Planning Pipeline:
 - **Multi-agent pipeline** — 6 specialized agents connected via shared state
 - **Conditional edges** — branch by input type (city/country/region) and budget result
 - **Validation loop** — schedule is auto-regenerated if it fails quality checks (max 3 retries)
+- **Parallel execution** — city_info and places agents run concurrently 
+  via LangGraph fan-out/fan-in, reducing total runtime by ~36%
 
 ---
 
@@ -142,7 +145,7 @@ The agent will ask you to enter your travel plan in natural language:
 예시: 동남아 여행 가고싶어
 여행 계획을 입력하세요:
 ```
-The agent will then automatically search for flights, collect city information, find attractions, and build a full day-by-day itinerary. This takes 2–3 minutes, so sit back and relax!
+The agent will then automatically search for flights, collect city information, find attractions, and build a full day-by-day itinerary. This takes about 60-90 seconds, so sit back and relax!
 
 
 ---
@@ -154,6 +157,7 @@ The agent will then automatically search for flights, collect city information, 
 - [ ] Multi-city trip planning
 - [ ] Hotel and accommodation search
 - [ ] Weather-aware scheduling
+- [ ] Further latency reduction via real-time flight API (Tequila/Amadeus)
 
 ---
 
